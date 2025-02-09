@@ -16,7 +16,7 @@ def load_data():
         data = json.load(file)
 
     for item in data:
-        product, created = Product.objects.update_or_create(
+        products, created = Product.objects.update_or_create(
             id=item["id"],
             defaults={
                 "product_name": item["product_name"],
@@ -36,10 +36,10 @@ def load_data():
         )
 
         # Remove old images and insert new ones
-        ProductImage.objects.filter(product=product).delete()
-        images = item.get("SubproductImages", item.get("productImageSrc", []))
+        ProductImage.objects.filter(products=products).delete()
+        images = item.get("SubproductsImages", item.get("productsImageSrc", []))
         for img in images:
-            ProductImage.objects.create(product=product, productImageSrc=img["productImageSrc"])
+            ProductImage.objects.create(products=products, productsImageSrc=img["productsImageSrc"])
 
     print("✅ All data inserted successfully!")
 
