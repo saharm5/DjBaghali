@@ -1,0 +1,42 @@
+[
+    {
+        "url": "http://localhost:5173/ProductDetails?id=1",
+        "id": 1,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=2",
+        "id": 2,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=4",
+        "id": 4,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=5",
+        "id": 5,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=5",
+        "id": 5,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=5",
+        "id": 5,
+        "is_favorite": false
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=5",
+        "id": 5,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=5",
+        "id": 5,
+        "is_favorite": false
+    }
+]
