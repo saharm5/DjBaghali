@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e988af6e-c139-4f76-a567-aa1d7927570a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/App/load_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/App/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/migrations/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjBaghali/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/load_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/load_data.py" afterDir="false" />
     </list>
@@ -47,7 +51,7 @@
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "Reverting in master",
     "last_opened_file_path": "C:/Users/Sanay/PycharmProjects/DjBaghali/App",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,7 +93,7 @@
       <workItem from="1738743219745" duration="356000" />
       <workItem from="1738743579724" duration="17367000" />
       <workItem from="1738991143100" duration="18469000" />
-      <workItem from="1739078528046" duration="2741000" />
+      <workItem from="1739078528046" duration="3216000" />
     </task>
     <servers />
   </component>
