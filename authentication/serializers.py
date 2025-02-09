@@ -22,10 +22,11 @@ class AuthSerializer(serializers.Serializer):
             user = User(phone_number=phone_number)
             user.set_password(password)
             user.save()
+            user.generate_confirm_code()  # تولید کد تأیید برای کاربر جدید
 
-        # تولید توکن
-        refresh = RefreshToken.for_user(user)
+        # ارسال کد تأیید (در اینجا فقط چاپ می‌کنیم، در واقع باید به کاربر ارسال بشه)
+        print(f"کد تأیید برای {user.phone_number}: {user.confirm_code}")
+
         return {
-            "refresh": str(refresh),
-            "access": str(refresh.access_token)
+            "message": "کد تأیید ارسال شد. منتظر وارد کردن کد تأیید باشید."
         }

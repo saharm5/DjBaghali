@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import random
 
 class UserManager(BaseUserManager):
     def create_user(self, phone_number, password=None):
@@ -7,7 +8,7 @@ class UserManager(BaseUserManager):
             raise ValueError("شماره تلفن اجباری است")
         user = self.model(phone_number=phone_number)
         user.set_password(password)
-        user.is_active = True
+        user.is_active = False  # کاربر غیر فعال است تا وقتی که کد تایید وارد بشه
         user.save(using=self._db)
         return user
 
@@ -24,6 +25,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    confirm_code = models.CharField(max_length=6, null=True, blank=True)  # این خط جدید
+    # باقی فیلدها و متدها
+
 
     groups = models.ManyToManyField(
         "auth.Group",
@@ -42,3 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone_number
+
+    def generate_confirm_code(self):
+        self.confirm_code = str(random.randint(100000, 999999))  # تولید کد ۶ رقمی
+        self.save()
