@@ -5,7 +5,6 @@ class Product(models.Model):
     product_name = models.CharField(max_length=255)
     product_details = models.TextField()
     main_price = models.IntegerField()
-    Discount = models.IntegerField(null=True, blank=True)
     final_price = models.IntegerField()
     brand = models.CharField(max_length=255)
     brand_image_src = models.URLField()
@@ -13,8 +12,8 @@ class Product(models.Model):
     sub_category = models.CharField(max_length=255)
     category_image_src = models.URLField()
     size = models.CharField(max_length=50)
-    production_date = models.CharField(max_length=50, null=True, blank=True)
-    expiration_date = models.CharField(max_length=50, null=True, blank=True)
+    production_date = models.CharField(max_length=50)
+    expiration_date = models.CharField(max_length=50)
 
     def __str__(self):
         return self.product_name
