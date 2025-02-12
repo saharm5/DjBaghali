@@ -38,5 +38,15 @@
         "url": "http://localhost:5173/ProductDetails?id=5",
         "id": 5,
         "is_favorite": false
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=9",
+        "id": 9,
+        "is_favorite": true
+    },
+    {
+        "url": "http://localhost:5173/ProductDetails?id=9",
+        "id": 9,
+        "is_favorite": false
     }
 ]
