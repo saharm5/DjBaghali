@@ -1,7 +1,9 @@
+# C:\Users\Sanay\PycharmProjects\DjBaghali\authentication\serializers.py
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import User
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class AuthSerializer(serializers.Serializer):
     phone_number = serializers.CharField()
@@ -22,7 +24,7 @@ class AuthSerializer(serializers.Serializer):
             user = User(phone_number=phone_number)
             user.set_password(password)
             user.save()
-            user.generate_confirm_code()  # تولید کد تأیید برای کاربر جدید
+            user.generate_confirm_code()  # اینجا کد تأیید تولید می‌شود
 
         # ارسال کد تأیید (در اینجا فقط چاپ می‌کنیم، در واقع باید به کاربر ارسال بشه)
         print(f"کد تأیید برای {user.phone_number}: {user.confirm_code}")

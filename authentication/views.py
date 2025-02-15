@@ -1,3 +1,4 @@
+# C:\Users\Sanay\PycharmProjects\DjBaghali\authentication\views.py
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
@@ -7,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import AuthSerializer
 
+
 class AuthView(APIView):
     def post(self, request):
         serializer = AuthSerializer(data=request.data)
@@ -15,22 +17,23 @@ class AuthView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ConfirmCodeView(APIView):
     def post(self, request):
-        # برای تأیید کد و فعال‌سازی حساب
         phone_number = request.data.get('phone_number')
         confirm_code = request.data.get('confirm_code')
+
+        if not phone_number or not confirm_code:
+            return Response({"error": "شماره تلفن و کد تأیید الزامی است!"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = User.objects.get(phone_number=phone_number)
 
             if user.confirm_code == confirm_code:
-                user.is_active = True  # کاربر فعال می‌شود
-                user.confirm_code = None  # کد تأیید حذف می‌شود
+                user.is_active = True
+                user.confirm_code = ""  # مقدار `confirm_code` را خالی کنید
                 user.save()
 
-                # توکن JWT صادر می‌شود
+                # تولید توکن JWT
                 refresh = RefreshToken.for_user(user)
                 return Response({
                     "access": str(refresh.access_token),
