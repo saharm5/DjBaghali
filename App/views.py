@@ -66,7 +66,7 @@ def data_products(request):
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 @csrf_exempt
-def post_favorit_request(request):
+def post_favorite_request (request):
     try:
         data = json.loads(request.body)
         file_path = get_file_path('favorit.json')
