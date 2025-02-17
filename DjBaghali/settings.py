@@ -28,11 +28,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+AUTH_USER_MODEL = 'authentication.User'
+
 INSTALLED_APPS = [
     "corsheaders",
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
+    'rest_framework.authtoken',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,10 +45,12 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'authentication',
     'App',
+    'AddFavorit',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
