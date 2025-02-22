@@ -9,14 +9,13 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-
 class Favorite(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # کاربری که محصول را پسندیده
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)  # محصولی که لایک شده
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'product')  # جلوگیری از اضافه شدن یک محصول چند بار توسط یک کاربر
+        unique_together = ('user', 'product')
 
     def __str__(self):
         return f"{self.user.phone_number} -> {self.product.name}"

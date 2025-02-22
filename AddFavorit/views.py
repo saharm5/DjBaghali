@@ -7,8 +7,7 @@ from .serializers import FavoriteSerializer
 
 
 class AddFavoriteView(APIView):
-    permission_classes = [IsAuthenticated]  # نیاز به احراز هویت دارد
-
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = FavoriteSerializer(data=request.data, context={"request": request})
 
@@ -24,5 +23,5 @@ class UserFavoritesView(APIView):
 
     def get(self, request):
         favorites = Favorite.objects.filter(user=request.user)
-        products = [fav.product for fav in favorites]  # استخراج لیست محصولات
+        products = [fav.product for fav in favorites]
         return Response({"favorites": [product.name for product in products]})
