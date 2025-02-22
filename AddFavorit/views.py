@@ -1,27 +1,28 @@
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .models import Favorite, Product
-from .serializers import FavoriteSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .models import FavoriteProduct
 
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def toggle_favorite(request):
+    data = request.data
+    product_id = data.get('id')
+    user = request.user
 
-class AddFavoriteView(APIView):
-    permission_classes = [IsAuthenticated]
-    def post(self, request):
-        serializer = FavoriteSerializer(data=request.data, context={"request": request})
+    try:
+        favorite = FavoriteProduct.objects.get(user=user, product_id=product_id)
+        favorite.is_favorite = not favorite.is_favorite
+        favorite.save()
+        status_message = "updated"
+    except FavoriteProduct.DoesNotExist:
+        favorite = FavoriteProduct.objects.create(user=user, product_id=product_id, is_favorite=True)
+        status_message = "created"
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "محصول به لیست علاقه‌مندی‌ها اضافه شد."}, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserFavoritesView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        favorites = Favorite.objects.filter(user=request.user)
-        products = [fav.product for fav in favorites]
-        return Response({"favorites": [product.name for product in products]})
+    return Response({
+        'status': status_message,
+        'product_id': product_id,
+        'is_favorite': favorite.is_favorite
+    })
