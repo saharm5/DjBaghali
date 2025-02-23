@@ -13,7 +13,6 @@ class AuthSerializer(serializers.Serializer):
         user, created = User.objects.get_or_create(phone_number=phone_number)
 
         if created:
-            # اگر کاربر جدید است، OTP تولید شود
             user.generate_otp()
             message = "کد تأیید ارسال شد، لطفاً OTP را وارد کنید."
         else:
@@ -40,15 +39,15 @@ class VerifyOTPSerializer(serializers.Serializer):
         except User.DoesNotExist:
             raise serializers.ValidationError("OTP نامعتبر است یا کاربر یافت نشد!")
 
-        # ذخیره رمز عبور و فعال کردن کاربر
         user.set_password(password)
-        user.otp = None  # حذف OTP پس از تأیید
+        user.otp = None
         user.is_active = True
         user.save()
 
         refresh = RefreshToken.for_user(user)
 
         return {
+            "Status":"ok",
             "message": "رمز عبور تنظیم شد.",
             "access": str(refresh.access_token),
             "refresh": str(refresh),
@@ -70,6 +69,7 @@ class LoginSerializer(serializers.Serializer):
         refresh = RefreshToken.for_user(user)
 
         return {
+            "Status": "ok",
             "message": "ورود موفقیت‌آمیز بود.",
             "access": str(refresh.access_token),
             "refresh": str(refresh),

@@ -11,7 +11,6 @@ User = get_user_model()
 
 
 def get_tokens_for_user(user):
-    """تولید توکن JWT"""
     refresh = RefreshToken.for_user(user)
     return {
         "access": str(refresh.access_token),
@@ -21,8 +20,6 @@ def get_tokens_for_user(user):
 
 @api_view(['POST'])
 def login_or_register(request):
-    # برسی وجود کاربر در دیتابیس
-    # اگه بود (ورود و 2) اگه نبود (ثبت نام و 1)
     phone = request.data.get('phone_number')
     if not phone:
         return Response({'error': 'شماره تلفن الزامی است!'}, status=status.HTTP_400_BAD_REQUEST)
@@ -39,7 +36,6 @@ def login_or_register(request):
 
 @api_view(['POST'])
 def verify_otp(request):
-    # برای ثبت نام
     phone = request.data.get('phone_number')
     otp = request.data.get('otp')
     password = request.data.get('password')
@@ -54,14 +50,13 @@ def verify_otp(request):
         user.is_active = True
         user.save()
 
-        return Response({'message': 'رمز عبور تنظیم شد.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
+        return Response({"Status": "ok",'message': 'رمز عبور تنظیم شد.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'OTP نامعتبر است!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
 def login_with_password(request):
-    # ورود با رمز عبور
     phone = request.data.get('phone_number')
     password = request.data.get('password')
 
@@ -71,12 +66,11 @@ def login_with_password(request):
     user = authenticate(phone_number=phone, password=password)
 
     if user:
-        return Response({'message': 'ورود موفق.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
+        return Response({"Status": "ok",'message': 'ورود موفق.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
     return Response({'error': 'شماره تلفن یا رمز عبور نادرست است!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ConfirmCodeView(APIView):
-    # بررسی کد تأیید و فعال‌سازی حساب
     def post(self, request):
         phone_number = request.data.get('phone_number')
         confirm_code = request.data.get('confirm_code')

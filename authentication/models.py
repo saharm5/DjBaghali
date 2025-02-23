@@ -10,7 +10,7 @@ class UserManager(BaseUserManager):
         user = self.model(phone_number=phone_number)
         if password:
             user.set_password(password)
-        user.is_active = False  # کاربر تا تأیید شماره غیرفعال است
+        user.is_active = False
         user.save(using=self._db)
         return user
 
@@ -19,14 +19,14 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
-        user.is_active = True  # ادمین نیاز به تأیید شماره تلفن ندارد
+        user.is_active = True
         user.save(using=self._db)
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, unique=True)
-    is_active = models.BooleanField(default=False)  # کاربران جدید غیرفعال هستند
+    is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     confirm_code = models.CharField(max_length=6, blank=True, null=True)
@@ -40,13 +40,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.phone_number
 
     def generate_confirm_code(self):
-        """تولید و ذخیره کد تأیید ۶ رقمی"""
         self.confirm_code = str(random.randint(100000, 999999))
         self.save()
-        return self.confirm_code  # مقدار برمی‌گرداند تا در صورت نیاز استفاده شود
+        return self.confirm_code
 
     def generate_otp(self):
-        """تولید و ذخیره OTP برای ورود بدون رمز"""
         self.otp = str(random.randint(100000, 999999))
         self.save()
-        return self.otp  # مقدار برمی‌گرداند تا در ارسال پیامک استفاده شود
+        return self.otp
