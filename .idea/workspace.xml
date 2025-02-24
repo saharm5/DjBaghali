@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e988af6e-c139-4f76-a567-aa1d7927570a" name="Changes" comment="fixing">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorit/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorit/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorit/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorit/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorit/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddFavorite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjBaghali/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjBaghali/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +152,7 @@
       <workItem from="1740383169140" duration="49000" />
       <workItem from="1740383280783" duration="79000" />
       <workItem from="1740383374375" duration="10233000" />
-      <workItem from="1740396860374" duration="2525000" />
+      <workItem from="1740396860374" duration="4787000" />
     </task>
     <servers />
   </component>
