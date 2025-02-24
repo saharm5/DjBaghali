@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('authentication.urls')),
     path('api/data/', data_products, name='data_products'),
-    path('favorites/', include('AddFavorit.urls')),
+    path('favorites/', include('AddFavorite.urls')),
     path('api/save-data/', post_favorite_request, name='save_favorite'),
     path('api/reviews/', post_review_request, name='post_review'),
 ]
