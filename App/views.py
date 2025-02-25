@@ -5,13 +5,14 @@ import pandas as pd
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 
 
 def get_file_path(file_name):
     return os.path.join(settings.BASE_DIR, 'App', file_name)
 
 
-def data_products(request):
+def data_merge():
     try:
         database_path = 'db.sqlite3'
         with sqlite3.connect(database_path) as conn:
@@ -76,7 +77,16 @@ def data_products(request):
         final_df['quantity'] = final_df['quantity'].fillna(0).astype(int)
         if 'product_id_y' in final_df.columns:
             final_df = final_df.drop(columns=['product_id_y'])
-        data = final_df.to_dict(orient='records')
+
+        return final_df
+
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+
+def data_products(request):
+    try:
+        data = data_merge().to_dict(orient='records')
 
         id_param = request.GET.get('id')
         if id_param:
@@ -86,7 +96,6 @@ def data_products(request):
             except ValueError:
                 return JsonResponse({"error": "Invalid id value"}, status=400)
 
-        # مرتب‌سازی بر اساس sort
         sort_param = request.GET.get('sort')
         if sort_param:
             if sort_param == 'Cheapest':
@@ -106,6 +115,29 @@ def data_products(request):
 
         return JsonResponse(data, safe=False)
 
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+
+@api_view(['GET'])
+def dataCartProduct(request):
+    try:
+        df_addcart_filtered = data_merge()
+        df_addcart_filtered = df_addcart_filtered[df_addcart_filtered['quantity'] >= 1]
+        data = df_addcart_filtered.to_dict(orient='records')
+        return JsonResponse(data, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+
+@api_view(['GET'])
+def data_favorite_products(request):
+    try:
+        df_favorites_filtered = data_merge()
+        df_favorites_filtered = df_favorites_filtered[df_favorites_filtered['is_favorite'] == 1]
+        data = df_favorites_filtered.to_dict(orient='records')
+        return JsonResponse(data, safe=False)
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
