@@ -18,7 +18,7 @@ def data_products(request):
             df_products = pd.read_sql_query("SELECT * FROM App_product", conn)
             df_images = pd.read_sql_query("SELECT * FROM App_productimage", conn)
             df_favorites = pd.read_sql_query("SELECT * FROM AddFavorite_favoriteproduct", conn)
-            df_addcart = pd.read_sql_query("SELECT * FROM AddFavorite_favoriteproduct", conn)
+            df_addcart = pd.read_sql_query("SELECT * FROM AddCart_addcartproduct", conn)
 
         if 'id' not in df_products.columns:
             return JsonResponse({"status": "error", "message": "Missing 'id' column in products."}, status=400)
@@ -33,7 +33,8 @@ def data_products(request):
 
         merged_df_f = pd.merge(df_products, grouped_images, left_on='id', right_on='product_id', how='left')
         merged_df_f['productImageSrc'] = merged_df_f.get('productImageSrc', []).apply(
-            lambda x: x if isinstance(x, list) else [])
+            lambda x: x if isinstance(x, list) else []
+        )
 
         if not df_favorites.empty:
             merged_df_f = pd.merge(
@@ -43,29 +44,39 @@ def data_products(request):
                 right_on='product_id',
                 how='left'
             )
-            merged_df_f['is_favorite'] = merged_df_f['is_favorite'].fillna(0)
         merged_df_f['is_favorite'] = merged_df_f['is_favorite'].fillna(0).astype(int)
         if 'product_id_y' in merged_df_f.columns:
             merged_df_f = merged_df_f.drop(columns=['product_id_y'])
 
         merged_df_C = pd.merge(df_products, grouped_images, left_on='id', right_on='product_id', how='left')
         merged_df_C['productImageSrc'] = merged_df_C.get('productImageSrc', []).apply(
-            lambda x: x if isinstance(x, list) else [])
+            lambda x: x if isinstance(x, list) else []
+        )
 
         if not df_addcart.empty:
             merged_df_C = pd.merge(
                 merged_df_C,
-                df_addcart[['product_id', 'is_favorite']],
+                df_addcart[['product_id', 'quantity']],
                 left_on='id',
                 right_on='product_id',
                 how='left'
             )
-            merged_df_C['is_favorite'] = merged_df_C['is_favorite'].fillna(0)
-        merged_df_C['is_favorite'] = merged_df_C['is_favorite'].fillna(0).astype(int)
-        if 'product_id_y' in merged_df_C.columns:
-            merged_df_C = merged_df_C.drop(columns=['product_id_y'])
+        merged_df_C['quantity'] = merged_df_C['quantity'].fillna(0).astype(int)
+        if 'product_id_x' in merged_df_C.columns:
+            merged_df_C = merged_df_C.drop(columns=['product_id_x'])
 
-        data = merged_df_C and merged_df_f.to_dict(orient='records')
+        final_df = pd.merge(
+            merged_df_C,
+            merged_df_f[['id', 'is_favorite']],
+            how='left',
+            left_on='id',
+            right_on='id'
+        )
+        final_df['is_favorite'] = final_df['is_favorite'].fillna(0).astype(int)
+        final_df['quantity'] = final_df['quantity'].fillna(0).astype(int)
+        if 'product_id_y' in final_df.columns:
+            final_df = final_df.drop(columns=['product_id_y'])
+        data = final_df.to_dict(orient='records')
 
         id_param = request.GET.get('id')
         if id_param:
@@ -75,6 +86,7 @@ def data_products(request):
             except ValueError:
                 return JsonResponse({"error": "Invalid id value"}, status=400)
 
+        # مرتب‌سازی بر اساس sort
         sort_param = request.GET.get('sort')
         if sort_param:
             if sort_param == 'Cheapest':
