@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/auth/', include('authentication.urls')),
     path('api/data/', data_products, name='data_products'),
     path('favorites/', include('AddFavorite.urls')),
+    path('Add/', include('AddCart.urls')),
     path('api/save-data/', post_favorite_request, name='save_favorite'),
     path('api/reviews/', post_review_request, name='post_review'),
 ]

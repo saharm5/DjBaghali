@@ -18,6 +18,7 @@ def data_products(request):
             df_products = pd.read_sql_query("SELECT * FROM App_product", conn)
             df_images = pd.read_sql_query("SELECT * FROM App_productimage", conn)
             df_favorites = pd.read_sql_query("SELECT * FROM AddFavorite_favoriteproduct", conn)
+            df_addcart = pd.read_sql_query("SELECT * FROM AddFavorite_favoriteproduct", conn)
 
         if 'id' not in df_products.columns:
             return JsonResponse({"status": "error", "message": "Missing 'id' column in products."}, status=400)
@@ -30,24 +31,41 @@ def data_products(request):
             .reset_index()
         )
 
-        merged_df = pd.merge(df_products, grouped_images, left_on='id', right_on='product_id', how='left')
-        merged_df['productImageSrc'] = merged_df.get('productImageSrc', []).apply(
+        merged_df_f = pd.merge(df_products, grouped_images, left_on='id', right_on='product_id', how='left')
+        merged_df_f['productImageSrc'] = merged_df_f.get('productImageSrc', []).apply(
             lambda x: x if isinstance(x, list) else [])
 
         if not df_favorites.empty:
-            merged_df = pd.merge(
-                merged_df,
+            merged_df_f = pd.merge(
+                merged_df_f,
                 df_favorites[['product_id', 'is_favorite']],
                 left_on='id',
                 right_on='product_id',
                 how='left'
             )
-            merged_df['is_favorite'] = merged_df['is_favorite'].fillna(0)
-        merged_df['is_favorite'] = merged_df['is_favorite'].fillna(0).astype(int)
-        if 'product_id_y' in merged_df.columns:
-            merged_df = merged_df.drop(columns=['product_id_y'])
+            merged_df_f['is_favorite'] = merged_df_f['is_favorite'].fillna(0)
+        merged_df_f['is_favorite'] = merged_df_f['is_favorite'].fillna(0).astype(int)
+        if 'product_id_y' in merged_df_f.columns:
+            merged_df_f = merged_df_f.drop(columns=['product_id_y'])
 
-        data = merged_df.to_dict(orient='records')
+        merged_df_C = pd.merge(df_products, grouped_images, left_on='id', right_on='product_id', how='left')
+        merged_df_C['productImageSrc'] = merged_df_C.get('productImageSrc', []).apply(
+            lambda x: x if isinstance(x, list) else [])
+
+        if not df_addcart.empty:
+            merged_df_C = pd.merge(
+                merged_df_C,
+                df_addcart[['product_id', 'is_favorite']],
+                left_on='id',
+                right_on='product_id',
+                how='left'
+            )
+            merged_df_C['is_favorite'] = merged_df_C['is_favorite'].fillna(0)
+        merged_df_C['is_favorite'] = merged_df_C['is_favorite'].fillna(0).astype(int)
+        if 'product_id_y' in merged_df_C.columns:
+            merged_df_C = merged_df_C.drop(columns=['product_id_y'])
+
+        data = merged_df_C and merged_df_f.to_dict(orient='records')
 
         id_param = request.GET.get('id')
         if id_param:
