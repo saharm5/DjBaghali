@@ -22,9 +22,9 @@ def data_merge():
             df_addcart = pd.read_sql_query("SELECT * FROM AddCart_addcartproduct", conn)
 
         if 'id' not in df_products.columns:
-            return JsonResponse({"status": "error", "message": "Missing 'id' column in products."}, status=400)
+            raise Exception("Missing 'id' column in products.")
         if 'product_id' not in df_images.columns:
-            return JsonResponse({"status": "error", "message": "Missing 'product_id' column in images."}, status=400)
+            raise Exception("Missing 'product_id' column in images.")
 
         grouped_images = (
             df_images.groupby('product_id')['productImageSrc']
@@ -66,6 +66,11 @@ def data_merge():
         if 'product_id_x' in merged_df_C.columns:
             merged_df_C = merged_df_C.drop(columns=['product_id_x'])
 
+        if 'quantity' not in merged_df_C.columns:
+            merged_df_C['quantity'] = 0
+        else:
+            merged_df_C['quantity'] = merged_df_C['quantity'].fillna(0).astype(int)
+
         final_df = pd.merge(
             merged_df_C,
             merged_df_f[['id', 'is_favorite']],
@@ -81,12 +86,13 @@ def data_merge():
         return final_df
 
     except Exception as e:
-        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+        raise e
 
 
 def data_products(request):
     try:
-        data = data_merge().to_dict(orient='records')
+        df = data_merge()
+        data = df.to_dict(orient='records')
 
         id_param = request.GET.get('id')
         if id_param:
@@ -126,7 +132,6 @@ def dataCartProduct(request):
         df_addcart_filtered = df_addcart_filtered[df_addcart_filtered['quantity'] >= 1]
         data = df_addcart_filtered.to_dict(orient='records')
         return JsonResponse(data, safe=False)
-
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
