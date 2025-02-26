@@ -12,7 +12,7 @@ def get_file_path(file_name):
     return os.path.join(settings.BASE_DIR, 'App', file_name)
 
 
-def data_merge():
+def data_merge(user_id=None):
     try:
         database_path = 'db.sqlite3'
         with sqlite3.connect(database_path) as conn:
@@ -25,6 +25,12 @@ def data_merge():
             raise Exception("Missing 'id' column in products.")
         if 'product_id' not in df_images.columns:
             raise Exception("Missing 'product_id' column in images.")
+
+        if user_id is not None:
+            if not df_favorites.empty:
+                df_favorites = df_favorites[df_favorites['user_id'] == user_id]
+            if not df_addcart.empty:
+                df_addcart = df_addcart[df_addcart['user_id'] == user_id]
 
         grouped_images = (
             df_images.groupby('product_id')['productImageSrc']
@@ -53,7 +59,6 @@ def data_merge():
         merged_df_C['productImageSrc'] = merged_df_C.get('productImageSrc', []).apply(
             lambda x: x if isinstance(x, list) else []
         )
-
         if not df_addcart.empty:
             merged_df_C = pd.merge(
                 merged_df_C,
@@ -65,7 +70,6 @@ def data_merge():
         merged_df_C['quantity'] = merged_df_C['quantity'].fillna(0).astype(int)
         if 'product_id_x' in merged_df_C.columns:
             merged_df_C = merged_df_C.drop(columns=['product_id_x'])
-
         if 'quantity' not in merged_df_C.columns:
             merged_df_C['quantity'] = 0
         else:
@@ -82,6 +86,12 @@ def data_merge():
         final_df['quantity'] = final_df['quantity'].fillna(0).astype(int)
         if 'product_id_y' in final_df.columns:
             final_df = final_df.drop(columns=['product_id_y'])
+        if 'is_favorite' not in final_df.columns:
+            final_df['is_favorite'] = 0
+        else:
+            final_df['is_favorite'] = final_df['is_favorite'].fillna(0).astype(int)
+
+        final_df = final_df.where(pd.notnull(final_df), None)
 
         return final_df
 
@@ -91,7 +101,8 @@ def data_merge():
 
 def data_products(request):
     try:
-        df = data_merge()
+        user_id = request.user.id if request.user.is_authenticated else None
+        df = data_merge(user_id=user_id)
         data = df.to_dict(orient='records')
 
         id_param = request.GET.get('id')
@@ -109,7 +120,7 @@ def data_products(request):
             elif sort_param == 'Expensive':
                 data = sorted(data, key=lambda x: x.get('main_price', 0), reverse=True)
             elif sort_param == 'Discounted':
-                data = sorted(data, key=lambda x: x.get('discount', 0), reverse=True)
+                data = sorted(data, key=lambda x: x.get('Discount', 0), reverse=True)
 
         limit = request.GET.get('limit')
         if limit:
@@ -128,7 +139,12 @@ def data_products(request):
 @api_view(['GET'])
 def dataCartProduct(request):
     try:
-        df_addcart_filtered = data_merge()
+        user = request.user
+        if not user or not user.is_authenticated:
+            return JsonResponse({"status": "error", "message": "Authentication required"}, status=401)
+        user_id = user.id
+
+        df_addcart_filtered = data_merge(user_id=user_id)
         df_addcart_filtered = df_addcart_filtered[df_addcart_filtered['quantity'] >= 1]
         data = df_addcart_filtered.to_dict(orient='records')
         return JsonResponse(data, safe=False)
@@ -139,7 +155,12 @@ def dataCartProduct(request):
 @api_view(['GET'])
 def data_favorite_products(request):
     try:
-        df_favorites_filtered = data_merge()
+        user = request.user
+        if not user or not user.is_authenticated:
+            return JsonResponse({"status": "error", "message": "Authentication required"}, status=401)
+        user_id = user.id
+
+        df_favorites_filtered = data_merge(user_id=user_id)
         df_favorites_filtered = df_favorites_filtered[df_favorites_filtered['is_favorite'] == 1]
         data = df_favorites_filtered.to_dict(orient='records')
         return JsonResponse(data, safe=False)

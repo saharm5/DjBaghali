@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjBaghali/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -158,7 +159,7 @@
       <workItem from="1740483330357" duration="388000" />
       <workItem from="1740490672551" duration="2084000" />
       <workItem from="1740548101249" duration="539000" />
-      <workItem from="1740548676106" duration="1981000" />
+      <workItem from="1740548676106" duration="12500000" />
     </task>
     <servers />
   </component>
