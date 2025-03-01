@@ -122,10 +122,19 @@ def data_products(request):
             elif sort_param == 'Discounted':
                 data = sorted(data, key=lambda x: x.get('Discount', 0), reverse=True)
 
-        limit = request.GET.get('limit')
-        if limit:
+        page_param = request.GET.get('page')
+        limit_param = request.GET.get('limit')
+        if page_param and limit_param:
             try:
-                limit = int(limit)
+                page = int(page_param)
+                limit = int(limit_param)
+                offset = (page - 1) * limit
+                data = data[offset:offset + limit]
+            except ValueError:
+                return JsonResponse({"error": "Invalid page or limit value"}, status=400)
+        elif limit_param:
+            try:
+                limit = int(limit_param)
                 data = data[:limit]
             except ValueError:
                 return JsonResponse({"error": "Invalid limit value"}, status=400)
