@@ -107,6 +107,15 @@ def data_products(request):
         df = data_merge(user_id=user_id)
         data = df.to_dict(orient='records')
 
+        # search
+        search_query = request.GET.get('search')
+        if search_query:
+            data = [
+                item for item in data
+                if search_query.lower() in str(item.get('product_name', '')).lower()
+            ]
+
+        # id
         id_param = request.GET.get('id')
         if id_param:
             try:
@@ -115,6 +124,7 @@ def data_products(request):
             except ValueError:
                 return JsonResponse({"error": "Invalid id value"}, status=400)
 
+        # sorting
         sort_param = request.GET.get('sort')
         if sort_param:
             if sort_param == 'Cheapest':
@@ -124,6 +134,7 @@ def data_products(request):
             elif sort_param == 'Discounted':
                 data = sorted(data, key=lambda x: x.get('Discount', 0), reverse=True)
 
+        # paging
         page_param = request.GET.get('page')
         limit_param = request.GET.get('limit')
         if page_param and limit_param:
@@ -145,7 +156,6 @@ def data_products(request):
 
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
-
 
 @api_view(['GET'])
 def dataCartProduct(request):
