@@ -101,7 +101,9 @@ def data_merge(user_id=None):
 
 def data_products(request):
     try:
-        user_id = request.user.id if request.user.is_authenticated else None
+        user = request.user
+        user_id = user.id if user and user.is_authenticated else None
+
         df = data_merge(user_id=user_id)
         data = df.to_dict(orient='records')
 
