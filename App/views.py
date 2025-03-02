@@ -110,9 +110,16 @@ def data_products(request):
         # search
         search_query = request.GET.get('search')
         if search_query:
+            search_query_lower = search_query.lower()
             data = [
                 item for item in data
-                if search_query.lower() in str(item.get('product_name', '')).lower()
+                if (
+                        search_query_lower in str(item.get('product_name', '')).lower() or
+                        search_query_lower in str(item.get('sub_category', '')).lower() or
+                        search_query_lower in str(item.get('category', '')).lower() or
+                        search_query_lower in str(item.get('brand', '')).lower() or
+                        search_query_lower in str(item.get('product_details', '')).lower()
+                )
             ]
 
         # id
@@ -156,6 +163,7 @@ def data_products(request):
 
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
 
 @api_view(['GET'])
 def dataCartProduct(request):
