@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e988af6e-c139-4f76-a567-aa1d7927570a" name="Changes" comment="fixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjBaghali/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/req.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +168,12 @@
       <workItem from="1740829188473" duration="2324000" />
       <workItem from="1740836224129" duration="3627000" />
       <workItem from="1740892465063" duration="1364000" />
+      <workItem from="1740906733442" duration="881000" />
+      <workItem from="1740978148632" duration="2943000" />
+      <workItem from="1741157930476" duration="9000" />
+      <workItem from="1741176292916" duration="2980000" />
+      <workItem from="1741412932091" duration="7727000" />
+      <workItem from="1741445590733" duration="694000" />
     </task>
     <servers />
   </component>

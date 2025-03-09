@@ -138,12 +138,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cors_allowed_origin = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://192.168.110.104:5173",
-    "http://192.168.21.1:5173",
-    "http://192.168.223.1:5173",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://localhost:8080",
+#     "http://192.168.110.104:5173",
+#     "http://192.168.21.1:5173",
+#     "http://192.168.223.1:5173",
+#     "http://192.168.111.164:8080",
+# ]
+CORS_ALLOWED_ORIGINS = True
+
 
 CORS_ALLOW_HEADERS = [
     "content-type",
