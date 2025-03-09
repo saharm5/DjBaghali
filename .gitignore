@@ -3,3 +3,4 @@ load_data.py
 .venv
 /AddFavorite/views copy.py
 /App/views copy.py
+*.tar
