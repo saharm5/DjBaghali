@@ -1,7 +1,8 @@
 # C:\Users\Sanay\PycharmProjects\DjBaghali\DjBaghali\urls.py
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+
 from App.views import data_products, post_review_request
 
 urlpatterns = [

@@ -1,10 +1,12 @@
+import sqlite3
+
 import pandas as pd
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .models import FavoriteProduct
-import sqlite3
-from django.contrib.auth import get_user_model
 
 
 @api_view(['POST'])

@@ -1,6 +1,7 @@
 # C:\Users\Sanay\PycharmProjects\DjBaghali\AddFavorite\models.py
-from django.db import models
 from django.conf import settings
+from django.db import models
+
 
 class FavoriteProduct(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

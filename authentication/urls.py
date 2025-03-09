@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import login_or_register, login_with_password, verify_otp, ConfirmCodeView
+
+from .views import (ConfirmCodeView, login_or_register, login_with_password,
+                    verify_otp)
 
 urlpatterns = [
     path('login-or-register/', login_or_register, name='login_or_register'),

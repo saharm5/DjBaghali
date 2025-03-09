@@ -1,8 +1,8 @@
+from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import AddCartProduct
-from django.contrib.auth import get_user_model
 
+from .models import AddCartProduct
 
 # C:\Users\Sanay\PycharmProjects\DjBaghali\AddCart\views.py
 

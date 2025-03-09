@@ -1,6 +1,8 @@
 # C:\Users\Sanay\PycharmProjects\DjBaghali\AddFavorite\views.py
 from django.urls import path
+
 from App.views import data_favorite_products
+
 from .views import toggle_favorite
 
 urlpatterns = [

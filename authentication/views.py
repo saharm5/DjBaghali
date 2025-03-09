@@ -1,11 +1,15 @@
-from rest_framework_simplejwt.tokens import RefreshToken
-from .models import User
-from rest_framework.views import APIView
-from .serializers import AuthSerializer
-from django.contrib.auth import get_user_model, authenticate
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+import os
+
+from django.contrib.auth import authenticate, get_user_model
 from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from DjBaghali import settings
+from .models import User
+from .serializers import AuthSerializer
 
 User = get_user_model()
 
@@ -29,6 +33,18 @@ def login_or_register(request):
     if created:
         otp = user.generate_otp()
         print(f"OTP : {otp}")
+        file_path = os.path.join(settings.BASE_DIR, 'authentication', 'OTP')
+
+        OTP = []
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                OTP = file.readlines()
+
+        OTP.append(f"{phone} : {otp}\n")
+
+        with open(file_path, 'w') as file:
+            file.writelines(OTP)
+
         return Response({'isregister': 1}, status=status.HTTP_201_CREATED)
 
     return Response({'isregister': 2}, status=status.HTTP_200_OK)
@@ -50,7 +66,8 @@ def verify_otp(request):
         user.is_active = True
         user.save()
 
-        return Response({"Status": "ok",'message': 'رمز عبور تنظیم شد.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
+        return Response({"Status": "ok", 'message': 'رمز عبور تنظیم شد.', **get_tokens_for_user(user)},
+                        status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'OTP نامعتبر است!'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -66,7 +83,8 @@ def login_with_password(request):
     user = authenticate(phone_number=phone, password=password)
 
     if user:
-        return Response({"Status": "ok",'message': 'ورود موفق.', **get_tokens_for_user(user)}, status=status.HTTP_200_OK)
+        return Response({"Status": "ok", 'message': 'ورود موفق.', **get_tokens_for_user(user)},
+                        status=status.HTTP_200_OK)
     return Response({'error': 'شماره تلفن یا رمز عبور نادرست است!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
