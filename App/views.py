@@ -109,6 +109,32 @@ def data_products(request):
         data = df.to_dict(orient='records')
 
         # search
+
+
+        # پیشنهاد ai ولی من دوسش ندارم
+        # search_query = request.GET.get('search')
+        #
+        # if search_query:
+        #     search_query_lower = search_query.lower()
+        #     search_fields = ['product_name', 'sub_category', 'category', 'brand', 'product_details']
+        #
+        #     data = [
+        #         item for item in data
+        #         if any(search_query_lower in str(item.get(field, '')).lower() for field in search_fields)
+        #     ]
+
+        # و یا
+
+        # search_query = request.GET.get('search')
+        #
+        # if search_query:
+        #     search_query_lower = search_query.lower()
+        #     search_fields = ['product_name', 'sub_category', 'category', 'brand', 'product_details']
+        #
+        #     data = list(filter(
+        #         lambda item: any(search_query_lower in str(item.get(field, '')).lower() for field in search_fields),
+        #         data))
+
         search_query = request.GET.get('search')
         if search_query:
             search_query_lower = search_query.lower()
@@ -181,6 +207,17 @@ def dataCartProduct(request):
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
+@api_view(['GET'])
+def isLoggedIn(request):
+    try:
+        user = request.user
+        if not user or not user.is_authenticated:
+            return JsonResponse({"status": "error", "message": "Authentication required"}, status=401)
+
+        return JsonResponse({"status": "success", "is_logged_in": True})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
 
 @api_view(['GET'])
 def data_favorite_products(request):
@@ -197,32 +234,32 @@ def data_favorite_products(request):
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
-
-@csrf_exempt
-def post_favorite_request(request):
-    try:
-        data = json.loads(request.body)
-        file_path = get_file_path('favorit.json')
-
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
-                try:
-                    favorites = json.load(f)
-                except json.JSONDecodeError:
-                    favorites = []
-        else:
-            favorites = []
-
-        favorites.append(data)
-
-        with open(file_path, 'w') as f:
-            json.dump(favorites, f, indent=4)
-
-        return JsonResponse({"status": "ok", "message": "Favorite saved successfully"})
-    except json.JSONDecodeError:
-        return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
-    except Exception as e:
-        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+#
+# @csrf_exempt
+# def post_favorite_request(request):
+#     try:
+#         data = json.loads(request.body)
+#         file_path = get_file_path('favorit.json')
+#
+#         if os.path.exists(file_path):
+#             with open(file_path, 'r') as f:
+#                 try:
+#                     favorites = json.load(f)
+#                 except json.JSONDecodeError:
+#                     favorites = []
+#         else:
+#             favorites = []
+#
+#         favorites.append(data)
+#
+#         with open(file_path, 'w') as f:
+#             json.dump(favorites, f, indent=4)
+#
+#         return JsonResponse({"status": "ok", "message": "Favorite saved successfully"})
+#     except json.JSONDecodeError:
+#         return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
+#     except Exception as e:
+#         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 
 @csrf_exempt

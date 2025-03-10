@@ -5,28 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e988af6e-c139-4f76-a567-aa1d7927570a" name="Changes" comment="fixing">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ad77fd00-b84d-49e1-b874-9311470166ae/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddCart/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddCart/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddCart/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddCart/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddCart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddCart/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorite/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddFavorite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddFavorite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DjBaghali/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/load_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +180,11 @@
       <workItem from="1741529549812" duration="1319000" />
       <workItem from="1741530892167" duration="331000" />
       <workItem from="1741531662376" duration="891000" />
-      <workItem from="1741532672225" duration="973000" />
+      <workItem from="1741532672225" duration="1225000" />
+      <workItem from="1741585083169" duration="32000" />
+      <workItem from="1741585117440" duration="129000" />
+      <workItem from="1741585310118" duration="19000" />
+      <workItem from="1741585330709" duration="7572000" />
     </task>
     <servers />
   </component>
