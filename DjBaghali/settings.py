@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'App',
     'AddFavorite',
     'AddCart',
+    'AddReview',
 ]
 
 # =================== تنظیمات REST FRAMEWORK ===================

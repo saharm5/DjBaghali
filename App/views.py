@@ -110,7 +110,6 @@ def data_products(request):
 
         # search
 
-
         # پیشنهاد ai ولی من دوسش ندارم
         # search_query = request.GET.get('search')
         #
@@ -207,6 +206,7 @@ def dataCartProduct(request):
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
+
 @api_view(['GET'])
 def isLoggedIn(request):
     try:
@@ -234,32 +234,19 @@ def data_favorite_products(request):
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
-#
-# @csrf_exempt
-# def post_favorite_request(request):
-#     try:
-#         data = json.loads(request.body)
-#         file_path = get_file_path('favorit.json')
-#
-#         if os.path.exists(file_path):
-#             with open(file_path, 'r') as f:
-#                 try:
-#                     favorites = json.load(f)
-#                 except json.JSONDecodeError:
-#                     favorites = []
-#         else:
-#             favorites = []
-#
-#         favorites.append(data)
-#
-#         with open(file_path, 'w') as f:
-#             json.dump(favorites, f, indent=4)
-#
-#         return JsonResponse({"status": "ok", "message": "Favorite saved successfully"})
-#     except json.JSONDecodeError:
-#         return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
-#     except Exception as e:
-#         return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+@api_view(['GET'])
+def dataReviewProduct(request):
+    try:
+        database_path = 'db.sqlite3'
+        with sqlite3.connect(database_path) as conn:
+            df_data_Review_Product = pd.read_sql_query("SELECT * FROM App_product", conn)
+
+        # df_data_Review_Product =
+        data = df_data_Review_Product.to_dict(orient='records')
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 
 @csrf_exempt

@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from .models import AddCartProduct
 
+
 # C:\Users\Sanay\PycharmProjects\DjBaghali\AddCart\views.py
 
 
@@ -14,10 +15,7 @@ def AddToCart(request):
     operation = data.get('operation', 'add')
 
     if not request.user.is_authenticated:
-        User = get_user_model()
-        user = User.objects.first()
-        if not user:
-            return Response({"error": "No user available for operation."}, status=400)
+        return Response({"error": "لطفاً وارد حساب کاربری خود شوید."}, status=401)
     else:
         user = request.user
 
