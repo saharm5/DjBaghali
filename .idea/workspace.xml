@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e988af6e-c139-4f76-a567-aa1d7927570a" name="Changes" comment="fixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddReview/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddReview/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddReview/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddReview/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/review.json" beforeDir="false" afterPath="$PROJECT_DIR$/App/review.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjBaghali/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjBaghali/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -217,7 +212,7 @@
       <workItem from="1742024605355" duration="4651000" />
       <workItem from="1742103405520" duration="4535000" />
       <workItem from="1742276696574" duration="8050000" />
-      <workItem from="1743831291434" duration="13006000" />
+      <workItem from="1743831291434" duration="13751000" />
     </task>
     <servers />
   </component>
