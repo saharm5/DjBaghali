@@ -1,12 +1,12 @@
 import json
 import os
 import sqlite3
-
 import pandas as pd
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
 
 
 def get_file_path(file_name):
@@ -236,14 +236,37 @@ def data_favorite_products(request):
 
 
 @api_view(['GET'])
-def dataReviewProduct(request):
+@permission_classes([AllowAny])
+def DataReviewProduct(request):
     try:
         database_path = 'db.sqlite3'
         with sqlite3.connect(database_path) as conn:
-            df_data_Review_Product = pd.read_sql_query("SELECT * FROM App_product", conn)
+            df_data_Product = pd.read_sql_query("SELECT id, product_name FROM App_product", conn)
+            df_Review_Product = pd.read_sql_query("SELECT * FROM AddReview_addreviewproduct", conn)
 
-        # df_data_Review_Product =
+        df_data_Review_Product = pd.merge(
+            df_Review_Product,
+            df_data_Product,
+            how='left',
+            left_on='product_id',
+            right_on='id'
+        )
+
+        if 'id_y' in df_data_Review_Product.columns:
+            df_data_Review_Product = df_data_Review_Product.drop(columns=['id_y'])
+
+        df_data_Review_Product = df_data_Review_Product.rename(columns={'id_x': 'id'})
+
         data = df_data_Review_Product.to_dict(orient='records')
+
+        id_param = request.GET.get('id')
+        if id_param:
+            try:
+                id_param = int(id_param)
+                data = [item for item in data if item.get('product_id') == id_param]
+            except ValueError:
+                return JsonResponse({"error": "Invalid id value"}, status=400)
+
         return JsonResponse(data, safe=False)
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=500)

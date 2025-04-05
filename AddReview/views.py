@@ -1,7 +1,9 @@
+# C:\Users\Sanay\PycharmProjects\DjBaghali\AddReview\views.py
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import AddReviewProduct
+# اینجا اضافه میکنه
 
 @api_view(['POST'])
 def AddToReview(request):
