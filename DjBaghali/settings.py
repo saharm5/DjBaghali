@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-wdapy@+a=4x#i!$q5$d#4z%bn+-s40x23dlu&+)3)&zdp4q2vx
 
 DEBUG = True  # 🚨 در محیط Production مقدار False شود
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['*']
 
 # =================== احراز هویت کاربران ===================
 AUTH_USER_MODEL = 'authentication.User'

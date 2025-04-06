@@ -325,7 +325,7 @@ def post_review_request(request):
 
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
-                try:    
+                try:
                     reviews = json.load(f)
                 except json.JSONDecodeError:
                     reviews = []
