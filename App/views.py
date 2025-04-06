@@ -1,12 +1,16 @@
 import json
 import os
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import re
 import sqlite3
 import pandas as pd
-from django.conf import settings
+from dateutil.relativedelta import relativedelta
+
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.permissions import AllowAny
+from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 
 def get_file_path(file_name):
@@ -110,7 +114,7 @@ def data_products(request):
 
         # search
 
-        # پیشنهاد ai ولی من دوسش ندارم
+        # پیش نهاد ai ولی من دوسش ندارم
         # search_query = request.GET.get('search')
         #
         # if search_query:
@@ -240,6 +244,7 @@ def data_favorite_products(request):
 def DataReviewProduct(request):
     try:
         database_path = 'db.sqlite3'
+
         with sqlite3.connect(database_path) as conn:
             df_data_Product = pd.read_sql_query("SELECT id, product_name FROM App_product", conn)
             df_Review_Product = pd.read_sql_query("SELECT * FROM AddReview_addreviewproduct", conn)
@@ -254,16 +259,56 @@ def DataReviewProduct(request):
 
         if 'id_y' in df_data_Review_Product.columns:
             df_data_Review_Product = df_data_Review_Product.drop(columns=['id_y'])
-
         df_data_Review_Product = df_data_Review_Product.rename(columns={'id_x': 'id'})
+
+        def parse_mixed_date(date_value):
+
+            if pd.isna(date_value):
+                return pd.NaT
+
+            date_str = str(date_value).strip()
+
+            if re.match(r'^\d+$', date_str):
+
+                return pd.to_datetime(int(date_str), unit='ms', errors='coerce')
+            else:
+                return pd.to_datetime(date_str, errors='coerce')
+
+        df_data_Review_Product['created_date'] = df_data_Review_Product['created_date'].apply(parse_mixed_date)
+
+        def convert_date(created_date):
+
+            if pd.isna(created_date):
+                return "زمان نامعتبر"
+
+            if timezone.is_naive(created_date):
+                created_date = timezone.make_aware(created_date, timezone.get_default_timezone())
+
+            now = timezone.now()
+            rd = relativedelta(now, created_date)
+
+            if rd.years == 0 and rd.months == 0 and rd.days == 0:
+                if rd.hours > 0:
+                    return f"{rd.hours} ساعت پیش "
+                elif rd.minutes > 0:
+                    return f"{rd.minutes} دقیقه پیش "
+                else:
+                    return "همین الان"
+            if rd.years > 0:
+                return f"{rd.years} سال پیش "
+            if rd.days < 30:
+                return f"{rd.days} روز پیش "
+            return f"{rd.months} ماه پیش "
+
+        df_data_Review_Product['created_date'] = df_data_Review_Product['created_date'].apply(convert_date)
 
         data = df_data_Review_Product.to_dict(orient='records')
 
         id_param = request.GET.get('id')
         if id_param:
             try:
-                id_param = int(id_param)
-                data = [item for item in data if item.get('product_id') == id_param]
+                product_id = int(id_param)
+                data = [item for item in data if item.get('product_id') == product_id]
             except ValueError:
                 return JsonResponse({"error": "Invalid id value"}, status=400)
 
@@ -280,7 +325,7 @@ def post_review_request(request):
 
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
-                try:
+                try:    
                     reviews = json.load(f)
                 except json.JSONDecodeError:
                     reviews = []
