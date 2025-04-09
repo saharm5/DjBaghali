@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'AddFavorite',
     'AddCart',
     'AddReview',
+    # 'chat',
 ]
-
 # =================== تنظیمات REST FRAMEWORK ===================
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

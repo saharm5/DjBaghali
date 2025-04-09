@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/data/', data_products, name='data_products'),
     path('api/isLoggedIn/', isLoggedIn, name='isLoggedIn'),
     path('favorites/', include('AddFavorite.urls')),
+    # path('chat/', include('chat.urls')),
     path('AddCart/', include('AddCart.urls')),
     path('AddReview/', include('AddReview.urls')),
     path('api/reviews/', post_review_request, name='post_review'),

@@ -32,7 +32,7 @@ def login_or_register(request):
 
     if created:
         otp = user.generate_otp()
-        print(f"OTP : {otp}")
+        print(f"{phone} : {otp}")
         file_path = os.path.join(settings.BASE_DIR, 'authentication', 'OTP')
 
         OTP = []
@@ -45,7 +45,7 @@ def login_or_register(request):
         with open(file_path, 'w') as file:
             file.writelines(OTP)
 
-        return Response({'isregister': 1}, status=status.HTTP_201_CREATED)
+        return Response({'isregister': 1, 'phone': phone, 'otp': otp}, status=status.HTTP_201_CREATED)
 
     return Response({'isregister': 2}, status=status.HTTP_200_OK)
 
